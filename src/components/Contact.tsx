@@ -30,8 +30,38 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
-    setTimeout(() => {
+    const BOT_TOKEN = "8423826399:AAHUp38gpIW6g6A67QsLZU7c6mb7OKpDFIs";
+    const CHAT_ID = "6372584909";
+    const apiUrl = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+
+    const message = [
+      "Новая заявка с сайта Потолок-КРГ:",
+      `Имя: ${formData.name}`,
+      `Телефон: ${formData.phone}`,
+      formData.email ? `Email: ${formData.email}` : null,
+      formData.area ? `Площадь: ${formData.area}` : null,
+      formData.message ? `Сообщение: ${formData.message}` : null,
+    ]
+      .filter(Boolean)
+      .join("\n");
+
+    try {
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          chat_id: CHAT_ID,
+          text: message,
+          parse_mode: "HTML",
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Telegram API error: ${response.status}`);
+      }
+
       toast({
         title: "Заявка отправлена!",
         description: "Мы свяжемся с вами в течение 30 минут для уточнения деталей.",
@@ -43,23 +73,29 @@ const Contact = () => {
         area: "",
         message: ""
       });
+    } catch (error) {
+      toast({
+        title: "Ошибка отправки",
+        description: "Не удалось отправить заявку. Попробуйте ещё раз или позвоните нам.",
+      });
+    } finally {
       setIsSubmitting(false);
-    }, 1000);
+    }
   };
 
   const contactInfo = [
     {
       icon: Phone,
       title: "Телефон",
-      info: "+7 (721) 234-56-78",
-      link: "tel:+77212345678",
+      info: "+7 777 890 47 54",
+      link: "tel:+77778904754",
       description: "Звоните с 8:00 до 20:00"
     },
     {
-      icon: Mail,
-      title: "Email",
-      info: "info@natyazhpotolok.kz",
-      link: "mailto:info@natyazhpotolok.kz",
+      icon: Phone,
+      title: "WhatsApp",
+      info: "+7 777 890 47 54",
+      link: "https://wa.me/77778904754",
       description: "Ответим в течение часа"
     },
     {
@@ -257,9 +293,9 @@ const Contact = () => {
                   asChild
                   className="bg-transparent border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary"
                 >
-                  <a href="tel:+77212345678" className="flex items-center space-x-2">
+                  <a href="tel:+77778904754" className="flex items-center space-x-2">
                     <Phone className="w-5 h-5" />
-                    <span>+7 (721) 234-56-78</span>
+                    <span>+7 777 890 47 54</span>
                   </a>
                 </Button>
               </CardContent>

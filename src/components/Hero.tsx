@@ -79,9 +79,9 @@ const Hero = () => {
               asChild
               className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary"
             >
-              <a href="tel:+77212345678" className="flex items-center space-x-2">
+              <a href="tel:+77778904754" className="flex items-center space-x-2">
                 <Phone className="w-5 h-5" />
-                <span>+7 (721) 234-56-78</span>
+                <span>+7 777 890 47 54</span>
               </a>
             </Button>
           </div>

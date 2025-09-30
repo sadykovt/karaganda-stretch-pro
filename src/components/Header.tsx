@@ -22,10 +22,10 @@ const Header = () => {
           {/* Logo */}
           <div className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-gradient-accent rounded-lg flex items-center justify-center">
-              <span className="text-accent-foreground font-bold text-lg">Н</span>
+              <span className="text-accent-foreground font-bold text-lg">П</span>
             </div>
             <div>
-              <h1 className="text-xl font-bold text-foreground">НатяжПотолок</h1>
+              <h1 className="text-xl font-bold text-foreground">Потолок-КРГ</h1>
               <p className="text-xs text-muted-foreground">Караганда</p>
             </div>
           </div>
@@ -67,11 +67,11 @@ const Header = () => {
           {/* Phone & CTA */}
           <div className="hidden md:flex items-center space-x-4">
             <a 
-              href="tel:+77212345678" 
+              href="tel:+77778904754" 
               className="flex items-center space-x-2 text-foreground hover:text-accent transition-colors"
             >
               <Phone className="w-4 h-4" />
-              <span className="font-semibold">+7 (721) 234-56-78</span>
+              <span className="font-semibold">+7 777 890 47 54</span>
             </a>
             <Button 
               variant="hero" 
@@ -128,11 +128,11 @@ const Header = () => {
               </button>
               <div className="flex flex-col space-y-3 pt-4 border-t border-border">
                 <a 
-                  href="tel:+77212345678" 
+                  href="tel:+77778904754" 
                   className="flex items-center space-x-2 text-foreground hover:text-accent transition-colors"
                 >
                   <Phone className="w-4 h-4" />
-                  <span className="font-semibold">+7 (721) 234-56-78</span>
+                  <span className="font-semibold">+7 777 890 47 54</span>
                 </a>
                 <Button 
                   variant="hero" 

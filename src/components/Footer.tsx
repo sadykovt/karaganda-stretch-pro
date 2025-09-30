@@ -1,4 +1,4 @@
-import { Phone, Mail, MapPin, Clock } from "lucide-react";
+import { Phone, MapPin, Clock } from "lucide-react";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -11,10 +11,10 @@ const Footer = () => {
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-accent rounded-lg flex items-center justify-center">
-                <span className="text-accent-foreground font-bold text-lg">Н</span>
+                <span className="text-accent-foreground font-bold text-lg">П</span>
               </div>
               <div>
-                <h3 className="text-xl font-bold">НатяжПотолок</h3>
+                <h3 className="text-xl font-bold">Потолок-КРГ</h3>
                 <p className="text-sm opacity-80">Караганда</p>
               </div>
             </div>
@@ -42,22 +42,24 @@ const Footer = () => {
             <h4 className="text-lg font-semibold">Контакты</h4>
             <div className="space-y-3 text-sm">
               <a 
-                href="tel:+77212345678" 
+                href="tel:+77778904754" 
                 className="flex items-center space-x-2 opacity-80 hover:opacity-100 transition-opacity"
               >
                 <Phone className="w-4 h-4" />
-                <span>+7 (721) 234-56-78</span>
+                <span>+7 777 890 47 54</span>
               </a>
               <a 
-                href="mailto:info@natyazhpotolok.kz" 
+                href="https://wa.me/77778904754" 
+                target="_blank" 
+                rel="noopener noreferrer"
                 className="flex items-center space-x-2 opacity-80 hover:opacity-100 transition-opacity"
               >
-                <Mail className="w-4 h-4" />
-                <span>info@natyazhpotolok.kz</span>
+                <Phone className="w-4 h-4" />
+                <span>WhatsApp</span>
               </a>
               <div className="flex items-start space-x-2 opacity-80">
                 <MapPin className="w-4 h-4 mt-0.5" />
-                <span>г. Караганда,<br />ул. Букетова 32/1</span>
+                <span>г. Караганда,<br />Молокова, 88</span>
               </div>
               <div className="flex items-center space-x-2 opacity-80">
                 <Clock className="w-4 h-4" />
@@ -110,7 +112,7 @@ const Footer = () => {
         <div className="border-t border-primary-foreground/20 mt-8 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-sm opacity-80 text-center md:text-left">
-              © {currentYear} НатяжПотолок. Все права защищены.
+              © {currentYear} Потолок-КРГ. Все права защищены.
             </div>
             <div className="flex items-center space-x-6 text-sm opacity-80">
               <span>Политика конфиденциальности</span>
