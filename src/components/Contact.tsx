@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,12 +11,26 @@ const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
-    email: "",
     area: "",
     message: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [captchaA, setCaptchaA] = useState(0);
+  const [captchaB, setCaptchaB] = useState(0);
+  const [captchaInput, setCaptchaInput] = useState("");
   const { toast } = useToast();
+
+  const generateCaptcha = () => {
+    const a = Math.floor(Math.random() * 9) + 1; // 1..9
+    const b = Math.floor(Math.random() * 9) + 1; // 1..9
+    setCaptchaA(a);
+    setCaptchaB(b);
+    setCaptchaInput("");
+  };
+
+  useEffect(() => {
+    generateCaptcha();
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -34,11 +48,23 @@ const Contact = () => {
     const CHAT_ID = "6372584909";
     const apiUrl = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
 
+    // Verify captcha
+    const expected = captchaA + captchaB;
+    const provided = parseInt(captchaInput.trim(), 10);
+    if (Number.isNaN(provided) || provided !== expected) {
+      toast({
+        title: "Проверка не пройдена",
+        description: "Пожалуйста, решите задачу правильно",
+      });
+      setIsSubmitting(false);
+      generateCaptcha();
+      return;
+    }
+
     const message = [
       "Новая заявка с сайта Потолок-КРГ:",
       `Имя: ${formData.name}`,
       `Телефон: ${formData.phone}`,
-      formData.email ? `Email: ${formData.email}` : null,
       formData.area ? `Площадь: ${formData.area}` : null,
       formData.message ? `Сообщение: ${formData.message}` : null,
     ]
@@ -69,10 +95,11 @@ const Contact = () => {
       setFormData({
         name: "",
         phone: "",
-        email: "",
         area: "",
         message: ""
       });
+      generateCaptcha();
+      setCaptchaInput("");
     } catch (error) {
       toast({
         title: "Ошибка отправки",
@@ -173,18 +200,6 @@ const Contact = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
-                    <Input
-                      id="email"
-                      name="email"
-                      type="email"
-                      placeholder="your@email.com"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      className="border-border focus:border-accent focus:ring-accent"
-                    />
-                  </div>
-                  <div className="space-y-2">
                     <Label htmlFor="area">Площадь помещения</Label>
                     <Input
                       id="area"
@@ -193,6 +208,20 @@ const Contact = () => {
                       placeholder="20 м²"
                       value={formData.area}
                       onChange={handleInputChange}
+                      className="border-border focus:border-accent focus:ring-accent"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="captcha">Защита от спама: {captchaA} + {captchaB} = ?</Label>
+                    <Input
+                      id="captcha"
+                      name="captcha"
+                      type="text"
+                      inputMode="numeric"
+                      placeholder="Введите результат"
+                      value={captchaInput}
+                      onChange={(e) => setCaptchaInput(e.target.value)}
+                      required
                       className="border-border focus:border-accent focus:ring-accent"
                     />
                   </div>
