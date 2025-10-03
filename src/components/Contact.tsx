@@ -44,8 +44,27 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
+    // Validate required fields
+    if (!formData.name.trim()) {
+      toast({
+        title: "Ошибка валидации",
+        description: "Пожалуйста, введите ваше имя",
+      });
+      setIsSubmitting(false);
+      return;
+    }
+
+    if (!formData.phone.trim()) {
+      toast({
+        title: "Ошибка валидации",
+        description: "Пожалуйста, введите ваш телефон",
+      });
+      setIsSubmitting(false);
+      return;
+    }
+
     const BOT_TOKEN = "8423826399:AAHUp38gpIW6g6A67QsLZU7c6mb7OKpDFIs";
-    const CHAT_ID = "6372584909";
+    const CHAT_ID = "6372584909"; // Замените на ваш chat_id
     const apiUrl = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
 
     // Verify captcha
@@ -72,6 +91,7 @@ const Contact = () => {
       .join("\n");
 
     try {
+      console.log("Sending message to Telegram:", message);
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
@@ -84,9 +104,26 @@ const Contact = () => {
         }),
       });
 
+      console.log("Telegram API response status:", response.status);
+      
       if (!response.ok) {
-        throw new Error(`Telegram API error: ${response.status}`);
+        const errorText = await response.text();
+        console.error("Telegram API error response:", errorText);
+        
+        // Handle specific Telegram API errors
+        if (response.status === 400 && errorText.includes("chat not found")) {
+          throw new Error("Чат не найден. Убедитесь, что бот добавлен в чат и chat_id указан правильно.");
+        } else if (response.status === 401) {
+          throw new Error("Неверный токен бота. Проверьте BOT_TOKEN.");
+        } else if (response.status === 403) {
+          throw new Error("Бот заблокирован пользователем. Пользователь должен разблокировать бота.");
+        } else {
+          throw new Error(`Telegram API error: ${response.status} - ${errorText}`);
+        }
       }
+      
+      const responseData = await response.json();
+      console.log("Telegram API success response:", responseData);
 
       toast({
         title: "Заявка отправлена!",
@@ -101,9 +138,10 @@ const Contact = () => {
       generateCaptcha();
       setCaptchaInput("");
     } catch (error) {
+      console.error("Form submission error:", error);
       toast({
         title: "Ошибка отправки",
-        description: "Не удалось отправить заявку. Попробуйте ещё раз или позвоните нам.",
+        description: `Не удалось отправить заявку: ${error instanceof Error ? error.message : 'Неизвестная ошибка'}. Попробуйте ещё раз или позвоните нам.`,
       });
     } finally {
       setIsSubmitting(false);

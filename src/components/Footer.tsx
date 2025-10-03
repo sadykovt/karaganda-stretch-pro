@@ -114,12 +114,24 @@ const Footer = () => {
             <div className="text-sm opacity-80 text-center md:text-left">
               © {currentYear} Потолок-КРГ. Все права защищены.
             </div>
-            <div className="flex items-center space-x-6 text-sm opacity-80">
-              <span>Политика конфиденциальности</span>
-              <span>•</span>
-              <span>Гарантия качества</span>
-              <span>•</span>
-              <span>Сертификаты</span>
+            <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-6 text-sm opacity-80">
+              <div className="flex items-center space-x-6">
+                <span>Политика конфиденциальности</span>
+                <span>•</span>
+                <span>Гарантия качества</span>
+                <span>•</span>
+                <span>Сертификаты</span>
+              </div>
+              <div className="text-center md:text-right">
+                <a 
+                  href="https://0x.uz" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="hover:opacity-100 transition-opacity"
+                >
+                  Разработка эффективных сайтов
+                </a>
+              </div>
             </div>
           </div>
         </div>
